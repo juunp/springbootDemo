@@ -1,9 +1,10 @@
 package com.judithpivoteau.TechnicalTest.controller;
 
 import com.judithpivoteau.TechnicalTest.dto.PostDto;
+import org.hamcrest.Matchers.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,8 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
 
+
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -41,16 +44,19 @@ public class PostControllerTest {
     @Test
     public void getPostsTest() throws Exception {
         List<PostDto> postDtos = new ArrayList<>();
-        PostDto postDto1 = new PostDto();
-        postDto1.body = "bbbb";
-        postDto1.id = 1L;
-        postDto1.title = "title";
-        postDto1.userId = 12L;
-        postDtos.add(postDto1);
+        PostDto postDto1;
+        for (int i = 0; i < 100; i++) {
+            postDto1 = new PostDto();
+            postDto1.body = "bbbb";
+            postDto1.id = 1L;
+            postDto1.title = "title";
+            postDto1.userId = 12L;
+            postDtos.add(postDto1);
+        }
         when(restTemplate.getForObject(eq(PostController.GET), eq(List.class))).thenReturn(postDtos);
         this.mockMvc.perform(get(GET_URI))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isNotEmpty());
+                .andExpect(jsonPath("$", hasSize(50)));
     }
 
     @Test
