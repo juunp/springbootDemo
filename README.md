@@ -1,3 +1,5 @@
+You need to install java 8 at least 
+
 To run the application from the console:
 `./gradlew bootRun`
 the application runs on the port 8080
