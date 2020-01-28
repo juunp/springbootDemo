@@ -6,8 +6,6 @@ import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,7 +16,6 @@ import org.springframework.web.client.UnknownHttpStatusCodeException;
 
 import java.lang.reflect.Type;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -41,9 +38,10 @@ public class PostController {
     public ResponseEntity<List<PostDto>> getPosts() {
         logger.debug("GET /api/v10/posts ");
         try {
-            List<Map<String, String>> postList = postService.getForObject(GET, List.class);
+            List postList = postService.getForObject(GET, List.class);
             Type listType = new TypeToken<List<PostDto>>() {
             }.getType();
+            assert postList != null;
             List<PostDto> postDtos = modelMapper.map(postList, listType);
             logger.debug("found {} posts from third-party", postDtos.size());
             if (!postDtos.isEmpty()) {
