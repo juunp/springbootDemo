@@ -1,0 +1,28 @@
+body {  
+  background: linear-gradient(to bottom, #73c3b5 0%, #7a8bb3 100%);
+}
+
+.App {
+  min-height: 100vh;  
+  background-color: #282c34;
+  color: white;
+}
+
+ol {
+  list-style-type: none;
+  margin: 15vh 15vw;  
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  list-style: none;
+}
+
+.post {
+  padding: 2rem;
+  flex: 2;  
+}
+
+section {  
+  background: linear-gradient(to bottom, #83e0cf 0%, #a1b8ec 100%);
+  padding: 1rem 1.5rem;
+}
